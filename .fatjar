@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Fri Mar 25 12:01:50 ICT 2016
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=UnitSiaEmail_fat.jar
+manifest.mergeall=true
+manifest.mainclass=com.email.SiaDataCollection
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
