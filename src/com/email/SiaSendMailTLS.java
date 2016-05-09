@@ -44,11 +44,12 @@ public class SiaSendMailTLS {
 		Message message = new MimeMessage(session);
 		message.setFrom(new InternetAddress("evil@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("luckymanomo@gmail.com,pin.ppr@gmail.com"));
+		//message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("luckymanomo@gmail.com"));
 		message.setSubject("JPY Sia Exchange Alert");
 		BodyPart messageBodyPart = new MimeBodyPart(); 
 		messageBodyPart.setContent(textBody, "text/html; charset=utf-8" ); 
 		Multipart multipart = new MimeMultipart(); 
-		multipart.addBodyPart(messageBodyPart );
+		multipart.addBodyPart(messageBodyPart);
 		message.setContent(multipart);  
 		//message.setText(textBody);
 
