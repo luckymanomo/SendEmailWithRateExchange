@@ -18,6 +18,8 @@ import javax.mail.internet.MimeMultipart;
 public class SiaSendMailTLS {
 	final static String username = "luckymanomo2@gmail.com";
 	final static String password = "aaaAAA111";
+	//final static String toEmails="luckymanomo@gmail.com,pin.ppr@gmail.com";
+	final static String toEmails="luckymanomo@gmail.com";
 	public static Properties props;
 	public static void sendMessage(String textBody){
 		try {
@@ -43,7 +45,7 @@ public class SiaSendMailTLS {
 
 		Message message = new MimeMessage(session);
 		message.setFrom(new InternetAddress("evil@gmail.com"));
-		message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("luckymanomo@gmail.com,pin.ppr@gmail.com"));
+		message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(toEmails));
 		//message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("luckymanomo@gmail.com"));
 		message.setSubject("JPY Sia Exchange Alert");
 		BodyPart messageBodyPart = new MimeBodyPart(); 
@@ -57,34 +59,4 @@ public class SiaSendMailTLS {
 
 		
 	}
-	/*public static void main(String[] args) {
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(props,
-		  new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
-			}
-		  });
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("evil@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("luckymanomo@gmail.com,pin.ppr@gmail.com"));
-			message.setSubject("Testing Subject");
-			message.setText("Rate Exchange Alert,"+ "<br>[Japan Rate] as of date "+new Date());
-
-			Transport.send(message);
-
-			System.out.println("Done at "+new Date());
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}*/
 }
