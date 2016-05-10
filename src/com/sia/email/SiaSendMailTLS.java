@@ -18,8 +18,8 @@ import javax.mail.internet.MimeMultipart;
 public class SiaSendMailTLS {
 	final static String username = "luckymanomo2@gmail.com";
 	final static String password = "aaaAAA111";
-	//final static String toEmails="luckymanomo@gmail.com,pin.ppr@gmail.com";
-	final static String toEmails="luckymanomo@gmail.com";
+	final static String toEmails="luckymanomo@gmail.com,pin.ppr@gmail.com";
+	//final static String toEmails="luckymanomo@gmail.com";
 	public static Properties props;
 	public static void sendMessage(String textBody){
 		try {

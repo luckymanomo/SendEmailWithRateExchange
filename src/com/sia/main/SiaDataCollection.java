@@ -11,7 +11,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -71,13 +73,16 @@ public class SiaDataCollection {
 					if(oldRateDataBean!=null) rateChanged=oldRateDataBean.getBuyingRate()+":"+oldRateDataBean.getSellingRate();
 					System.out.println("rateChanged:"+rateChanged);
 					if(rate!=null && !rate.equals(rateChanged)){
+					//if(rate!=null){
 						/*rateChanged=rate;
 						
 						//retrieve old
 						oldRateDataBean=null;
 						try{oldRateDataBean=ReadSpreadsheet.retrieveLastRecord();}catch(Exception e){}*/
 						//insert new
-						try{ReadSpreadsheet.insertRecord(DateFormat.getInstance().format(new Date())+"",htmlRateDataBean.getBuyingRate()+"",htmlRateDataBean.getSellingRate()+"");}catch(Exception e){}
+						//try{ReadSpreadsheet.insertRecord(DateFormat.getInstance().format(new Date())+"",htmlRateDataBean.getBuyingRate()+"",htmlRateDataBean.getSellingRate()+"");}catch(Exception e){}
+						
+						try{ReadSpreadsheet.insertRecord(new SimpleDateFormat("M/d/YYYY HH:mm:ss",new Locale("en", "US")).format(new Date())+"",htmlRateDataBean.getBuyingRate()+"",htmlRateDataBean.getSellingRate()+"");}catch(Exception e){}
 						
 						String arrowBuying=null,arrowSelling=null;
 						if(oldRateDataBean!=null){
@@ -95,7 +100,8 @@ public class SiaDataCollection {
 								+ "Sent Time: "+new Date()+
 								"</td></tr></tbody></table></td></tr><!-- Spacing --><tr><td style='font-family: Helvetica, arial, sans-serif; font-size: 13px; color: #ffffff;' align='center' valign='middle'>Don't want to receive email Updates? <a style='text-decoration: none; color: #d41b29;' href='#'>Unsubscribe here </a></td></tr><!-- Spacing --><tr><td width='100%' height='20'>&nbsp;</td></tr><!-- Spacing --></tbody></table></td></tr></tbody></table></td></tr></tbody></table><!-- End of postfooter -->";
 						SiaSendMailTLS.sendMessage(body);
-						System.out.println("Send an email: "+lastUpdate+" with "+rate+" "+new Date());
+						//System.out.println("Send an email: "+lastUpdate+" with "+rate+" "+new Date());
+						System.out.println("Send an email: "+new Date());
 					}else{
 						System.out.println("No updated: "+new Date());
 					}
