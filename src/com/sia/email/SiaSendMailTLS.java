@@ -1,4 +1,4 @@
-package com.email;
+package com.sia.email;
 import java.util.Date;
 import java.util.Properties;
 
