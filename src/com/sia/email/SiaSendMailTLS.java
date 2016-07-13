@@ -18,18 +18,18 @@ import javax.mail.internet.MimeMultipart;
 public class SiaSendMailTLS {
 	final static String username = "luckymanomo2@gmail.com";
 	final static String password = "aaaAAA111";
-	final static String toEmails="luckymanomo@gmail.com,pin.ppr@gmail.com";
+	
 	//final static String toEmails="luckymanomo@gmail.com";
 	public static Properties props;
-	public static void sendMessage(String textBody){
+	public static void sendMessage(String textBody,String toEmails){
 		try {
-			Transport.send(initialMail(textBody));
+			Transport.send(initialMail(textBody,toEmails));
 			System.out.println("Done at "+new Date());
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	public static Message initialMail(String textBody) throws AddressException, MessagingException{
+	public static Message initialMail(String textBody,String toEmails) throws AddressException, MessagingException{
 		props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
