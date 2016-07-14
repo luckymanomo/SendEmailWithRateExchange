@@ -21,15 +21,15 @@ public class SiaSendMailTLS {
 	
 	//final static String toEmails="luckymanomo@gmail.com";
 	public static Properties props;
-	public static void sendMessage(String textBody,String toEmails){
+	public static void sendMessage(String subject,String textBody,String toEmails){
 		try {
-			Transport.send(initialMail(textBody,toEmails));
+			Transport.send(initialMail(subject,textBody,toEmails));
 			System.out.println("Done at "+new Date());
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	public static Message initialMail(String textBody,String toEmails) throws AddressException, MessagingException{
+	public static Message initialMail(String subject,String textBody,String toEmails) throws AddressException, MessagingException{
 		props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -38,6 +38,7 @@ public class SiaSendMailTLS {
 
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
+			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
 			}
@@ -47,7 +48,7 @@ public class SiaSendMailTLS {
 		message.setFrom(new InternetAddress("evil@gmail.com"));
 		message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(toEmails));
 		//message.setRecipients(Message.RecipientType.TO,InternetAddress.parse("luckymanomo@gmail.com"));
-		message.setSubject("JPY Sia Exchange Alert");
+		message.setSubject(subject);
 		BodyPart messageBodyPart = new MimeBodyPart(); 
 		messageBodyPart.setContent(textBody, "text/html; charset=utf-8" ); 
 		Multipart multipart = new MimeMultipart(); 
