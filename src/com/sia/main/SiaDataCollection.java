@@ -66,15 +66,13 @@ public class SiaDataCollection {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				try{
+				try{retrieveAndSendEmail("JPY",100,"SIA-Japan","[JPY][&yen;100]","https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/510px-Flag_of_Japan.svg.png");}catch(Exception e){e.printStackTrace();}
 					
-					
-					retrieveAndSendEmail("JPY",100,"SIA-Japan","[JPY][&yen;100]","https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/510px-Flag_of_Japan.svg.png");
-					retrieveAndSendEmail("HKD",1,"Sia-Hong_Kong", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/250px-Flag_of_Hong_Kong.svg.png");
-					
-					Thread.sleep(1000*60);
-				}catch(Exception e){e.printStackTrace();}
+				try{retrieveAndSendEmail("HKD",1,"Sia-Hong_Kong", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/250px-Flag_of_Hong_Kong.svg.png");}catch(Exception e){e.printStackTrace();}
+				
+				try {Thread.sleep(1000*60);} catch (InterruptedException e) {e.printStackTrace();}
 			}
+			
 		
 	}
 	private static void retrieveAndSendEmail(String cType,int multiply,String label,String currencyString, String flagURL) throws UnsupportedEncodingException, IOException {
