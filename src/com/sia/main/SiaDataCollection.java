@@ -45,11 +45,7 @@ public class SiaDataCollection {
 	public static void main(String[] args){
 			
 			//loadSheet
-			try {
-				authenAndLoadSheet();
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+			try {authenAndLoadSheet();} catch (Exception e1) {e1.printStackTrace();}
 			
 			while(true){
 				
@@ -57,14 +53,11 @@ public class SiaDataCollection {
 				System.out.println("Refresh-Token: "+ReadSpreadsheet.credential.getRefreshToken());
 				long expiredInMinutes=ReadSpreadsheet.credential.getExpiresInSeconds()/60;
 				System.out.println("Token will be expired in "+ReadSpreadsheet.credential.getExpiresInSeconds()/60+" minutes");
-				try {
-					int refreshTime=30;
-					if(expiredInMinutes<=refreshTime){
-						ReadSpreadsheet.credential.refreshToken();
-						System.out.println("Refresh token has been performed if it is less than "+refreshTime+" minutes.");
-					}
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				
+				int refreshTime=30;
+				if(expiredInMinutes<=refreshTime){
+					try {authenAndLoadSheet();} catch (Exception e1) {e1.printStackTrace();}
+					System.out.println("Refresh token has been performed if it is less than "+refreshTime+" minutes.");
 				}
 				try{retrieveAndSendEmail("JPY",100,"SIA-Japan","[JPY][&yen;100]","https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/510px-Flag_of_Japan.svg.png");}catch(Exception e){e.printStackTrace();}
 					
@@ -101,7 +94,7 @@ public class SiaDataCollection {
 		try{oldRateDataBean=ReadSpreadsheet.retrieveLastRecord(cType);}catch(Exception e){e.printStackTrace();}
 		if(oldRateDataBean!=null) {
 			rateChanged=oldRateDataBean.getBuyingRate()+":"+oldRateDataBean.getSellingRate();
-			System.out.println("Last rate has been changed to "+rateChanged);
+			System.out.println("Last rate is "+rateChanged);
 			if(rate!=null && !rate.equals(rateChanged)){
 				
 				try{ReadSpreadsheet.insertRecord(cType,new SimpleDateFormat("M/d/YYYY HH:mm:ss",new Locale("en", "US")).format(new Date())+"",htmlRateDataBean.getBuyingRate()+"",htmlRateDataBean.getSellingRate()+"");}catch(Exception e){}

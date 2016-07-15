@@ -106,11 +106,12 @@ public class ReadSpreadsheet {
 			// service.setAuthSubToken(accessToken);
 			List<SpreadsheetEntry> spreadsheets = feed.getEntries();
 			// Iterate through all of the spreadsheets returned
-			int i=0;
+			//int i=0;
 			for (SpreadsheetEntry spreadsheet : spreadsheets) {
-				System.out.println("Sheet Name: "+(++i)+". "+spreadsheet.getTitle().getPlainText());
+				//System.out.println("Sheet Name: "+(++i)+". "+spreadsheet.getTitle().getPlainText());
 				//Specify this sheet
 				if ("SiaRateExchange".equalsIgnoreCase(spreadsheet.getTitle().getPlainText())) {
+					System.out.println("SiaRateExchange is set!");
 					spreadsheetSia=spreadsheet;
 					/*WorksheetFeed worksheetFeed = service.getFeed(spreadsheet.getWorksheetFeedUrl(), WorksheetFeed.class);
 					List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
