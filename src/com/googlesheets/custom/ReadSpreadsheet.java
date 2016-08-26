@@ -81,9 +81,6 @@ public class ReadSpreadsheet {
         // Initialize the data store factory.
         dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
         // set up authorization code flow
-        //GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,SCOPES).setDataStoreFactory(dataStoreFactory).build();
-        //GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,SCOPES).setAccessType("offline").setDataStoreFactory(dataStoreFactory).build();
-        //GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,SCOPES).setApprovalPrompt("force").setDataStoreFactory(dataStoreFactory).build();
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets,SCOPES).setDataStoreFactory(dataStoreFactory).build();
         
         // authorize
@@ -101,7 +98,7 @@ public class ReadSpreadsheet {
 			
 			//String accessToken = credential.getRefreshToken();
 			service.setAuthSubToken(accessToken);
-			credential.refreshToken();
+			//credential.refreshToken();
 			feed = service.getFeed(SPREADSHEET_FEED_URL, SpreadsheetFeed.class);
 			// service.setAuthSubToken(accessToken);
 			List<SpreadsheetEntry> spreadsheets = feed.getEntries();
