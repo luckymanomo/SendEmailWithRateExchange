@@ -87,19 +87,25 @@ public class ReadSpreadsheet {
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user2");
      }
       
-    public static void loadSheet() throws IOException, ServiceException{
+    public static void loadSheet(){
     	  	service = new SpreadsheetService("SIA_DEMO");
-			System.out.println("Initialize...");
-			System.out.println("AccessToken:"+credential.getAccessToken());
-			System.out.println("RefreshToken:"+credential.getRefreshToken());
-			System.out.println("Expired Time (minutes):"+credential.getExpiresInSeconds()/60);
+			System.out.println("Loading sheets...");
+			//System.out.println("AccessToken:"+credential.getAccessToken());
+			//System.out.println("RefreshToken:"+credential.getRefreshToken());
+			System.out.println("[LoadingSheets] Expired Time (minutes): "+credential.getExpiresInSeconds()/60);
 			
 			String accessToken = credential.getAccessToken();
 			
 			//String accessToken = credential.getRefreshToken();
 			service.setAuthSubToken(accessToken);
 			//credential.refreshToken();
-			feed = service.getFeed(SPREADSHEET_FEED_URL, SpreadsheetFeed.class);
+			try {
+				//System.out.println((service==null));
+				feed = service.getFeed(SPREADSHEET_FEED_URL, SpreadsheetFeed.class);
+			} catch (IOException | ServiceException e) {
+				System.err.println("[service.getFeed(SPREADSHEET_FEED_URL, SpreadsheetFeed.class)] has an error occured.");
+				e.printStackTrace();
+			}
 			// service.setAuthSubToken(accessToken);
 			List<SpreadsheetEntry> spreadsheets = feed.getEntries();
 			// Iterate through all of the spreadsheets returned

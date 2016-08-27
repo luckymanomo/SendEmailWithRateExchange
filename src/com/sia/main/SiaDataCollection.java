@@ -62,7 +62,7 @@ public class SiaDataCollection {
 				System.out.println("Token will be expired in "+expiredInMinutes+" minutes");
 				
 				int refreshTime=15;
-				checkIfExpired(refreshTime);
+				if(checkIfExpired(refreshTime)) ReadSpreadsheet.loadSheet(); //testing after exceeding interval time. (assumed in 1 minutes)
 				
 				retrieveAndSendEmail("JPY",100,"SIA-Japan","[JPY][&yen;100]","https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/510px-Flag_of_Japan.svg.png");	
 				retrieveAndSendEmail("HKD",1,"Sia-Hong_Kong", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/250px-Flag_of_Hong_Kong.svg.png");
@@ -204,13 +204,16 @@ public class SiaDataCollection {
 		//return ("Buying: ฿"+buyingRate+"<br>Selling: ฿"+sellingRate+"");
 		
 	}
-	public static void checkIfExpired(int refreshTime){
+	public static boolean checkIfExpired(int refreshTime){
+		boolean isExpired=false;
 		long expiredInMinutes=ReadSpreadsheet.credential.getExpiresInSeconds()/60;
 		if(expiredInMinutes<=refreshTime){
+			isExpired=true;
 			try {
 				ReadSpreadsheet.credential.refreshToken();
 			} catch (Exception e1) {e1.printStackTrace();}
 			System.out.println("Refresh token has been performed if it is less than "+refreshTime+" minutes.");
 		}
+		return isExpired;
 	}
 }
