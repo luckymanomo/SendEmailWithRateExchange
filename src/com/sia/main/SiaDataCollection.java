@@ -30,7 +30,7 @@ public class SiaDataCollection {
 	//final static String toEmails="luckymanomo@gmail.com";
 	public static URLConnection connection=null;
 	//final static String toEmails="luckymanomo@gmail.com";
-	public static boolean testPrintPattern=true;
+	public static boolean testPrintPattern=false; //testing and debugging
 	public static final int BUYING_TYPE=1;
 	public static final int SELLING_TYPE=2;
 	public static void initAuthenticator(){
@@ -66,7 +66,7 @@ public class SiaDataCollection {
 				if(checkIfExpired(refreshTime)) ReadSpreadsheet.loadSheet(); //testing after exceeding interval time. (assumed in 1 minutes)
 				
 				retrieveAndSendEmail("JPY",100,"SIA-Japan","[JPY][&yen;100]","https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/510px-Flag_of_Japan.svg.png");	
-				retrieveAndSendEmail("HKD",1,"Sia-Hong_Kong", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/250px-Flag_of_Hong_Kong.svg.png");
+				//retrieveAndSendEmail("HKD",1,"Sia-HongKong", "", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/250px-Flag_of_Hong_Kong.svg.png");
 				
 				try {Thread.sleep(1000*60);} catch (InterruptedException e) {e.printStackTrace();}
 			}
@@ -178,9 +178,9 @@ public class SiaDataCollection {
 		//String arrowYellow="<img src='http://www.wealthmagik.com/App_Themes/FundInfo/images/YellowArrow.png' width='15px'>";
 		//String arrowGreen="<img src='http://www.wealthmagik.com/App_Themes/FundInfo/images/GreenArrow.png'>";
 		//String arrowRed="<img src='http://www.wealthmagik.com/App_Themes/FundInfo/images/RedArrow.png'>";
-		String arrowYellow="<img src='https://lh3.googleusercontent.com/RsW-bQWMHdTLoaYv16enOE9ZVGVqW7YX-Y9Fd6Idkev0pZEREF3DCYBrFNBDEtsguA5h3YUVIf5v_jQ=w2554-h1146' width='15px'>";
-		String arrowGreen="<img src='https://lh6.googleusercontent.com/fKYz66oo1SuPH2_nbSxjg3t8WNBvHzENBukrxFQzwjSeMnz6EWlLEv_jcKgNRvJhjFvOLFM047znMvk=w2554-h1146'>";
-		String arrowRed="<img src='https://lh4.googleusercontent.com/EW-i4mULDI8ccHmxSsdTZ9q4lCkuZedjgUu8dsJE78DUoVq09XRJv7c3KDY0_K-v8ZgrO8KJHr7NzbE=w2554-h1146'>";
+		String arrowYellow="<img src='https://lh3.googleusercontent.com/CSYI_rQMInftiXeJnN2FTI0jqjYS-JjD8fixlXW3JwqGDC03XBDSJMrziHDPQ8fFMovi5w3WsSFl3Ho=w2554-h1146' width='15px'>";
+		String arrowGreen="<img src='https://lh6.googleusercontent.com/g34bD63SokxCCQhHH9n5ggcStBUEvn4YLAd19m4bi6VLDLZdgzBzDiZezNfiDqP0RDqiWqnseJnZQKc=w2554-h1146'>";
+		String arrowRed="<img src='https://lh4.googleusercontent.com/Xe_wprw43oBZwKwzBFFXyv0QWtBTI15QVDtG-d_m3cpCMPwZMUtDm4hNEhWi0aHuzEhjWz97Ggp1AFk=w2554-h1146'>";
 		String arrowColor="";
 		String colorString="";
 		String image="";
