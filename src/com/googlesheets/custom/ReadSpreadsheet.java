@@ -44,18 +44,12 @@ public class ReadSpreadsheet {
     public static SpreadsheetService service;
     public static SpreadsheetFeed feed;
     public static SpreadsheetEntry spreadsheetSia;
-
-    public static void main(String[] args) throws Exception{
+    public static final String DATE_PATTERN="M/d/YYYY HH:mm:ss";
+    /*public static void main(String[] args) throws Exception{
     	try {
 			credential = authorize();
 			loadSheet();
 		} catch (com.google.gdata.util.AuthenticationException e) {
-			/*e.printStackTrace();
-			System.out.println("Trying connecting");
-			System.out.println(DATA_STORE_DIR.getAbsolutePath());
-			new File(DATA_STORE_DIR.getAbsolutePath()+File.separator+"StoredCredential").delete();
-			credential = authorize();
-			loadSheet();*/
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,12 +58,10 @@ public class ReadSpreadsheet {
 		try {
 			RateDataBean rateDataBean=retrieveLastRecord("JPY");
 			System.out.println(rateDataBean);
-			//insertRecord(DateFormat.getInstance().format(new Date())+"","30.33","10.50");
 		} catch (IOException | ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+    }*/
     
       /** Authorizes the installed application to access user's protected data. */
     public static Credential authorize() throws Exception {
@@ -90,8 +82,6 @@ public class ReadSpreadsheet {
     public static void loadSheet(){
     	  	service = new SpreadsheetService("SIA_DEMO");
 			System.out.println("Loading sheets...");
-			//System.out.println("AccessToken:"+credential.getAccessToken());
-			//System.out.println("RefreshToken:"+credential.getRefreshToken());
 			System.out.println("[LoadingSheets] Expired Time (minutes): "+credential.getExpiresInSeconds()/60);
 			
 			String accessToken = credential.getAccessToken();
@@ -190,7 +180,7 @@ public class ReadSpreadsheet {
     	       
     	        switch(tag){
     	        	case "datetime":try {
-						rateDataBean.setDateTime(new SimpleDateFormat("M/d/yyyy HH:mm:ss").parse(value));
+						rateDataBean.setDateTime(new SimpleDateFormat(ReadSpreadsheet.DATE_PATTERN).parse(value));
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}break;
@@ -203,6 +193,53 @@ public class ReadSpreadsheet {
     	    
     	  return rateDataBean;
       }
+    
+    public static ConfigurationBean loadConfiguration(String sheetName) throws IOException, ServiceException{
+  	  ConfigurationBean configurationBean=new ConfigurationBean();
+  	  WorksheetEntry readWorksheetEntry=null;
+  	  WorksheetFeed worksheetFeed = service.getFeed(spreadsheetSia.getWorksheetFeedUrl(), WorksheetFeed.class);
+			List<WorksheetEntry> worksheets = worksheetFeed.getEntries();
+			for(WorksheetEntry eachSheet:worksheets){
+				if(eachSheet.getTitle().getPlainText().equalsIgnoreCase(sheetName)){
+					//System.out.println("Found sheet "+sheetName);
+					readWorksheetEntry=eachSheet;break;
+				}
+			}
+  	    URL listFeedUrl = readWorksheetEntry.getListFeedUrl();
+  	    ListFeed listFeed = service.getFeed(listFeedUrl, ListFeed.class);
+  	    //System.out.println("Loading configuration name = "+sheetName);
+  	    for(int i=0;i<listFeed.getEntries().size();i++){
+  	    	
+  	    	
+  	    	ListEntry row = listFeed.getEntries().get(i);
+  	    	
+  	    	 /*for (String tag : row.getCustomElements().getTags()) {
+     	        String value=row.getCustomElements().getValue(tag);
+     	       System.out.println("tag:"+tag+", value:"+value);
+  	    	 }*/
+  	    	
+  	    	//System.out.println("row:"+row);
+  	  	    //System.out.println("Row Count:"+readWorksheetEntry.getRowCount());
+  	  	    String key=row.getCustomElements().getValue("key");
+  	  	    String value=row.getCustomElements().getValue("value");
+  	  	    //System.out.println("i:"+i+", key:"+key+", value:"+value);
+  	  	    if(key!=null && !key.trim().equals("")){
+  	  	    	switch(key){
+  	  	    		case "imageURLRed":configurationBean.setImageURLRed(value);;break;
+  	  	    		case "imageURLYellow":configurationBean.setImageURLYellow(value);;break;
+  	  	    		case "imageURLGreen":configurationBean.setImageURLGreen(value);;break;
+  	  	    		case "emailList":configurationBean.setEmailList(value);;break;
+  	  	    		case "imageGood":configurationBean.setImageGood(value);;break;
+  	  	    		case "imageBad":configurationBean.setImageBad(value);;break;
+  	  	    		case "imageNeutral":configurationBean.setImageNeutral(value);;break;
+  	  	    		default:;
+  	  	    	}
+  	  	    }//else break;
+  	    }
+  	    
+  	    
+  	  return configurationBean;
+    }
 
     
     public static void insertRecord(String sheetName,String dateTime,String buyingValue,String sellingValue) throws IOException, ServiceException{
